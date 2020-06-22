@@ -1,28 +1,49 @@
 import React from 'react';
+import SwapiService from "../../services/swapi-service";
 
 import './random-planet.css';
 
 export default class RandomPlanet extends React.Component {
+    swapiService = new SwapiService();
+    state = {
+        id: 10,
+        name: null,
+        population: null,
+        rotationPeriod: null,
+        diameter: null
+    }
+
+    constructor() {
+        super();
+        this.updatePlanet();
+    }
+
+    updatePlanet() {
+        const id = Math.floor(Math.random() * 19) + 2;
+        this.swapiService.getPlanet(id)
+            .then((result) => this.setState(result))
+    }
 
     render() {
+        const {id, name, population, rotationPeriod, diameter} = this.state;
         return (
             <div className="random-planet jumbotron rounded">
                 <img className="planet-image"
-                     src="https://starwars-visualguide.com/assets/img/planets/5.jpg" />
+                     src={`https://starwars-visualguide.com/assets/img/planets/${id}.jpg`}/>
                 <div>
-                    <h4>Planet Name</h4>
+                    <h4>{name}</h4>
                     <ul className="list-group list-group-flush">
                         <li className="list-group-item">
                             <span className="term">Population</span>
-                            <span>123124</span>
+                            <span>{population}</span>
                         </li>
                         <li className="list-group-item">
                             <span className="term">Rotation Period</span>
-                            <span>43</span>
+                            <span>{rotationPeriod}</span>
                         </li>
                         <li className="list-group-item">
                             <span className="term">Diameter</span>
-                            <span>100</span>
+                            <span>{diameter}</span>
                         </li>
                     </ul>
                 </div>
