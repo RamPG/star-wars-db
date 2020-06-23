@@ -8,6 +8,15 @@ import PersonDetails from '../person-details';
 import './app.css';
 
 export default class App extends React.Component {
+    state = {
+        selectedPersonId: "1"
+    }
+    changePersonId = (id) => {
+        this.setState({
+            selectedPersonId: id
+        })
+    }
+
     render() {
         return (
             <div>
@@ -16,10 +25,10 @@ export default class App extends React.Component {
 
                 <div className="row mb2">
                     <div className="col-md-6">
-                        <ItemList/>
+                        <ItemList changePersonId={this.changePersonId}/>
                     </div>
                     <div className="col-md-6">
-                        <PersonDetails/>
+                        <PersonDetails selectedPersonId={this.state.selectedPersonId}/>
                     </div>
                 </div>
             </div>

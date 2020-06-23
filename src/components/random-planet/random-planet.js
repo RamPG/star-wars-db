@@ -6,6 +6,7 @@ import ErrorMessage from "../error-message";
 
 export default class RandomPlanet extends React.Component {
     swapiService = new SwapiService();
+
     state = {
         planet: {
             id: 10,
@@ -18,9 +19,9 @@ export default class RandomPlanet extends React.Component {
         error: false
     }
 
-    constructor() {
-        super();
+    componentDidMount() {
         this.updatePlanet();
+        const intervalID = setInterval(this.updatePlanet, 10000);
     }
 
     onPlanetLoaded = (result) => {
@@ -37,7 +38,7 @@ export default class RandomPlanet extends React.Component {
         })
     }
 
-    updatePlanet() {
+    updatePlanet = () => {
         const id = Math.floor(Math.random() * 19) + 2;
         this.swapiService.getPlanet(id)
             .then(this.onPlanetLoaded)
