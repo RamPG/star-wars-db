@@ -3,6 +3,8 @@ import SwapiService from "../../services/swapi-service";
 import Spinner from "../spinner";
 import './random-planet.css';
 import ErrorMessage from "../error-message";
+import ErrorBoundry from "../error-boundry";
+import ErrorButton from "../error-button";
 
 export default class RandomPlanet extends React.Component {
     swapiService = new SwapiService();
@@ -52,12 +54,13 @@ export default class RandomPlanet extends React.Component {
         const content = !(loading || error) ? <PlanetView planet={planet}/> : null;
         const errorMessage = error ? <ErrorMessage/> : null
         return (
-            <div className="random-planet jumbotron rounded">
-                {errorMessage}
-                {spinner}
-                {content}
-            </div>
-
+            <ErrorBoundry>
+                <div className="random-planet jumbotron rounded">
+                    {errorMessage}
+                    {spinner}
+                    {content}
+                </div>
+            </ErrorBoundry>
         );
     }
 }
@@ -89,6 +92,7 @@ class PlanetView extends React.Component {
                         </li>
                     </ul>
                 </div>
+                <ErrorButton/>
             </React.Fragment>
         );
     }

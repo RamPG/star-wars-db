@@ -1,33 +1,41 @@
 import React from 'react';
 import SwapiService from "../../services/swapi-service";
 import Spinner from "../spinner";
-import './person-details.css';
+import ErrorButton from "../error-button";
+import './item-details.css';
+import ErrorMessage from "../error-message";
 
-export default class PersonDetails extends React.Component {
+export default class ItemDetails extends React.Component {
     swapiService = new SwapiService();
     state = {
-        person: null,
+        item: null,
         loading: true
     }
 
     componentDidMount() {
-        this.updatePerson();
+        this.updateItem();
     }
 
     componentDidUpdate(prevProps) {
-        if (prevProps.selectedPersonId !== this.props.selectedPersonId)
-            this.updatePerson();
+        if (prevProps.selectedItemId !== this.props.selectedItemId)
+            this.updateItem();
     }
 
-    updatePerson() {
+    updateItem() {
         this.setState({
-            loading: true
+            loading: true,
+            hasError: false
         })
-        this.swapiService.getPerson(this.props.selectedPersonId)
-            .then((person) => this.setState(
+        this.swapiService.getPerson(this.props.selectedItemId)
+            .then((item) => this.setState(
                 {
-                    person: person,
+                    item: item,
                     loading: false
+                }
+            ))
+            .catch(() => this.setState(
+                {
+                    hasError: true
                 }
             ))
     }
@@ -37,12 +45,11 @@ export default class PersonDetails extends React.Component {
             return (
                 <Spinner/>
             )
-        const {id, name, gender, birthYear, eyeColor} = this.state.person;
+        const {id, name, gender, birthYear, eyeColor} = this.state.item;
         return (
             <div className="person-details card">
                 <img className="person-image"
                      src={`https://starwars-visualguide.com/assets/img/characters/${id}.jpg`}/>
-
                 <div className="card-body">
                     <h4>{name}</h4>
                     <ul className="list-group list-group-flush">
@@ -60,6 +67,7 @@ export default class PersonDetails extends React.Component {
                         </li>
                     </ul>
                 </div>
+                <ErrorButton/>
             </div>
         )
     }
