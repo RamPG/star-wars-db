@@ -1,8 +1,8 @@
 export default class SwapiService {
 
     _apiBase = 'https://swapi.dev/api';
-
-    async getResource(url) {
+    _imageBase = "https://starwars-visualguide.com/assets/img"
+    getResource = async (url) => {
         const res = await fetch(`${this._apiBase}${url}`);
 
         if (!res.ok) {
@@ -17,9 +17,12 @@ export default class SwapiService {
         return res.results.map(this._transformPerson);
     }
 
-    async getPerson(id) {
+    getPerson = async (id) => {
         const person = await this.getResource(`/people/${id}/`);
         return this._transformPerson(person);
+    }
+    getPersonImage = async (id) => {
+        return `${this._imageBase}/characters/${id}.jpg`
     }
 
     getAllPlanets = async () => {
@@ -27,9 +30,12 @@ export default class SwapiService {
         return res.results.map(this._transformPlanet);
     }
 
-    async getPlanet(id) {
+    getPlanet = async (id) => {
         const planet = await this.getResource(`/planets/${id}/`);
         return this._transformPlanet(planet);
+    }
+    getPlanetImage = async (id) => {
+        return `${this._imageBase}/planets/${id}.jpg`
     }
 
     getAllStarships = async () => {
@@ -41,7 +47,9 @@ export default class SwapiService {
         const starship = this.getResource(`/starships/${id}/`);
         return this._transformStarship(starship);
     }
-
+    getStarshipImage = async (id) => {
+        return `${this._imageBase}/starships/${id}.jpg`
+    }
     _extractId(item) {
         const idRegExp = /\/([0-9]*)\/$/;
         return item.url.match(idRegExp)[1];
