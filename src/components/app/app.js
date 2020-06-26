@@ -3,17 +3,21 @@ import React from 'react';
 import Header from '../header';
 import RandomPlanet from '../random-planet';
 import './app.css';
-import ErrorButton from "../error-button";
-import ErrorMessage from "../error-message";
 import PeoplePage from "../people-page";
+import SwapiService from "../../services/swapi-service";
+import DummySwapiService from "../../services/dummy-swapi-service";
+import {SwapiServiceProvider} from "../swapi-service-context";
 
 export default class App extends React.Component {
+    swapiService = new SwapiService();
     render() {
         return (
             <div>
-                <Header/>
-                <RandomPlanet/>
-                <PeoplePage/>
+                <SwapiServiceProvider value={this.swapiService}>
+                    <Header/>
+                    <RandomPlanet/>
+                    <PeoplePage/>
+                </SwapiServiceProvider>
             </div>
         );
     }
