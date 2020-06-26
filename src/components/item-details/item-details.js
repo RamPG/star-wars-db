@@ -1,5 +1,4 @@
 import React from 'react';
-import Spinner from "../spinner";
 import ErrorButton from "../error-button";
 import './item-details.css';
 
@@ -18,50 +17,13 @@ class Record extends React.Component {
 export {Record};
 
 export default class ItemDetails extends React.Component {
-    state = {
-        item: null,
-        url: null,
-        loading: true
-    }
-
-    componentDidMount() {
-        this.updateItem();
-    }
-
-    componentDidUpdate(prevProps) {
-        if (prevProps.selectedItemId !== this.props.selectedItemId)
-            this.updateItem();
-    }
-
-    updateItem() {
-        this.setState({
-            loading: true
-        })
-        this.props.getData(this.props.selectedItemId)
-            .then((item) => this.setState(
-                {
-                    item: item,
-                    loading: false
-                }
-            ));
-        this.props.getImage(this.props.selectedItemId)
-            .then((item) => this.setState(
-                {
-                    url: item
-                }
-            ))
-    }
 
     render() {
-        if (this.state.loading === true)
-            return (
-                <Spinner/>
-            )
-        const {item, item: {name}, url} = this.state;
+        const {item, item: {name}, imageUrl} = this.props;
         return (
             <div className="person-details card">
                 <img className="person-image"
-                     src={url}/>
+                     src={imageUrl}/>
                 <div className="card-body">
                     <h4>{name}</h4>
                     <ul className="list-group list-group-flush">
