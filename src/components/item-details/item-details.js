@@ -41,15 +41,10 @@ export default class ItemDetails extends React.Component {
             .then((item) => this.setState(
                 {
                     item: item,
+                    imageUrl: this.props.getImage(this.props.selectedItemId),
                     loading: false
                 }
             ));
-        this.props.getImage(this.props.selectedItemId)
-            .then((item) => this.setState(
-                {
-                    imageUrl: item
-                }
-            ))
     }
 
     render() {
@@ -63,7 +58,7 @@ export default class ItemDetails extends React.Component {
                 <img className="person-image"
                      src={imageUrl}/>
                 <div className="card-body">
-                    <h4>{name}</h4>
+                    <h4>{item.name}</h4>
                     <ul className="list-group list-group-flush">
                         {
                             React.Children.map(this.props.children, (child) => {

@@ -20,7 +20,7 @@ export default class SwapiService {
         const person = await this.getResource(`/people/${id}/`);
         return this._transformPerson(person);
     }
-    getPersonImage = async (id) => {
+    getPersonImage = (id) => {
         return `${this._imageBase}/characters/${id}.jpg`
     }
 
@@ -33,7 +33,7 @@ export default class SwapiService {
         const planet = await this.getResource(`/planets/${id}/`);
         return this._transformPlanet(planet);
     }
-    getPlanetImage = async (id) => {
+    getPlanetImage = (id) => {
         return `${this._imageBase}/planets/${id}.jpg`
     }
 
@@ -46,7 +46,7 @@ export default class SwapiService {
         const starship = await this.getResource(`/starships/${id}/`);
         return this._transformStarship(starship);
     }
-    getStarshipImage = async (id) => {
+    getStarshipImage = (id) => {
         return `${this._imageBase}/starships/${id}.jpg`
     }
 

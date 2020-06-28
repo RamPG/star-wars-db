@@ -1,3 +1,3 @@
 import withDataList from "./with-data-list";
-
-export {withDataList};
+import withSwapiService from "./with-swapi-service";
+export {withDataList, withSwapiService};
