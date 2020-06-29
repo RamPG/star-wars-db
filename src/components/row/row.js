@@ -1,6 +1,5 @@
 import React from 'react';
 
-import './row.css';
 export default class Row extends React.Component {
     render() {
         return (

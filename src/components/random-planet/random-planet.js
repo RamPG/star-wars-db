@@ -4,7 +4,6 @@ import Spinner from "../spinner";
 import './random-planet.css';
 import ErrorMessage from "../error-message";
 import ErrorBoundry from "../error-boundry";
-import ErrorButton from "../error-button";
 
 export default class RandomPlanet extends React.Component {
     swapiService = new SwapiService();
@@ -92,7 +91,6 @@ class PlanetView extends React.Component {
                         </li>
                     </ul>
                 </div>
-                <ErrorButton/>
             </React.Fragment>
         );
     }

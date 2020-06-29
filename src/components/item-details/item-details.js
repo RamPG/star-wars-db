@@ -1,27 +1,14 @@
 import React from 'react';
-import ErrorButton from "../error-button";
 import './item-details.css';
 import Spinner from "../spinner";
-
-class Record extends React.Component {
-    render() {
-        const {label, item, field} = this.props;
-        return (
-            <li className="list-group-item">
-                <span className="term">{label}</span>
-                <span>{item[field]}</span>
-            </li>
-        )
-    }
-}
-
-export {Record};
+import ErrorMessage from "../error-message";
 
 export default class ItemDetails extends React.Component {
     state = {
         item: null,
         imageUrl: null,
-        loading: true
+        loading: true,
+        error: false
     }
 
     componentDidMount() {
@@ -34,21 +21,29 @@ export default class ItemDetails extends React.Component {
     }
 
     updateItem() {
+        const {getData, getImage, selectedItemId} = this.props;
         this.setState({
             loading: true
         })
-        this.props.getData(this.props.selectedItemId)
+        getData(selectedItemId)
             .then((item) => this.setState(
                 {
                     item: item,
-                    imageUrl: this.props.getImage(this.props.selectedItemId),
-                    loading: false
+                    imageUrl: getImage(selectedItemId),
+                    loading: false,
+                    error: false
                 }
-            ));
+            ))
+            .catch(() => this.setState({error: true}));
     }
 
     render() {
-        const {loading, item, imageUrl} = this.state;
+        const {loading, item, imageUrl, error} = this.state;
+        if (error === true) {
+            return (
+                <ErrorMessage/>
+            )
+        }
         if (loading === true)
             return (
                 <Spinner/>
@@ -67,8 +62,21 @@ export default class ItemDetails extends React.Component {
                         }
                     </ul>
                 </div>
-                <ErrorButton/>
             </div>
         )
     }
 }
+
+class Record extends React.Component {
+    render() {
+        const {label, item, field} = this.props;
+        return (
+            <li className="list-group-item">
+                <span className="term">{label}</span>
+                <span>{item[field]}</span>
+            </li>
+        )
+    }
+}
+
+export {Record};
