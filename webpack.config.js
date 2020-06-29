@@ -2,6 +2,9 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
     mode: "development",
+    output: {
+        publicPath: "/"
+    },
     module: {
         rules: [
             {
@@ -58,6 +61,7 @@ module.exports = {
 
     ],
     devServer: {
-        open: true
+        open: true,
+        historyApiFallback: true,
     }
 }
