@@ -39,6 +39,9 @@ export default class ItemDetails extends React.Component {
 
     render() {
         const {loading, item, imageUrl, error} = this.state;
+        if (!item) {
+            return <span>Select a item from a list</span>;
+        }
         if (error === true) {
             return (
                 <ErrorMessage/>
